@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa';
 import { BsShieldLockFill } from 'react-icons/bs';
@@ -6,17 +6,29 @@ import { ImEnter } from 'react-icons/im';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {login} from '../../../actions/userActions'
+import { useLocation } from "react-router-dom";
 
 import '../styles/mainStyles.css'
 
 function UserLogin() {
+    
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
     const history = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
     const [loginDetails, setLoginDetails] = useState({
         email: '',
         password : '',
     })
+
+    useEffect(() => {
+        const token = user?.token;
+    
+        if(user !== null){
+            history('/')
+        }
+      }, [location]);
 
     const handelCredentials = (e) => {
         const {name, value} = e.target;

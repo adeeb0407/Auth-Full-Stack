@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BsShieldLockFill } from "react-icons/bs";
 import { BiShow, BiHide } from "react-icons/bi";
@@ -10,10 +10,21 @@ import "../styles/mainStyles.css";
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux'
 import {register} from '../../../actions/userActions'
+import { useLocation } from "react-router-dom";
 
 function UserRegister() {
   const history = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  
+  useEffect(() => {
+    const token = user?.token;
+  
+    if(user !== null){
+        history('/')
+    }
+  }, [location]);
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
@@ -23,13 +34,14 @@ function UserRegister() {
     address: "",
     password: "",
   });
-
+  
   const [showPassword, setShowPassword] = useState("false");
 
   const handelInputChange = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
   };
+  
 
   const handelRegisterSubmit = (e) => {
     e.preventDefault();
