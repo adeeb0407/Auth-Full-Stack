@@ -24,8 +24,21 @@ function UserLogin() {
     }
 
     const handelLoginSubmit = (e) => {
+         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
             e.preventDefault()
-            dispatch(login(loginDetails, history));
+            if(loginDetails.email.trim() == '' || loginDetails.password.trim() == ''){
+                alert('please Enter Email')
+            }else if(loginDetails.email.trim() == ''){
+                alert('please Enter Email')
+            }else if(loginDetails.password.trim() == ''){
+                alert('please Enter password')
+            }else{
+                if(regex.test(loginDetails.email) === false){
+                    alert('pleae enter a prooper email')
+                }else{
+                    dispatch(login(loginDetails, history));
+                }
+            }
     }
 
     return (

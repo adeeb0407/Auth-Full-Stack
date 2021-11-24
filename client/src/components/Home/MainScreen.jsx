@@ -19,6 +19,7 @@ export default function MainScreen() {
     const location = useLocation();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
+
     const logout = () => {
         dispatch({type : 'LOGOUT'})
         navigate('/login');
@@ -26,17 +27,15 @@ export default function MainScreen() {
       };
       useEffect(() => {
         const token = user?.token;
-    
+
         if (token) {
           const decodedToken = decode(token);
-    
           if (decodedToken.exp * 1000 < new Date().getTime()) logout();
         }
-    
         setUser(JSON.parse(localStorage.getItem('profile')));
       }, [location]);
 
-  return (
+    return (
       <>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -62,4 +61,4 @@ export default function MainScreen() {
      />}
     </>
   );
-}
+  }

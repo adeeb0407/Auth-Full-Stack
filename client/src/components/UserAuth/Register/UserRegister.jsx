@@ -33,7 +33,22 @@ function UserRegister() {
 
   const handelRegisterSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(userDetails, history))
+    const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if(userDetails.firstName.trim() == '' || userDetails.lastName.trim() == ''){
+        alert('please Enter your Name')
+    }else if(userDetails.email.trim() == ''){
+        alert('please Enter your Email')
+    }else if(regex.test(userDetails.email) === false){
+        alert('please Enter a proper Email')
+    }else if(userDetails.phone.trim() == ''){
+        alert('please Enter your Phone Number')
+    }else if(userDetails.password.trim() == ''){
+        alert('please Enter a password')
+    }else if(userDetails.address.trim() == ''){
+        alert('please Enter your Address')
+    }else{
+          dispatch(register(userDetails, history))
+    }
   };
 
   const handelShowPassword = () => {
